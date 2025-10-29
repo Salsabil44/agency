@@ -1,8 +1,8 @@
 /*-----------------------------------------------------------------
 
 Template Name: Agznko - Creative Agency and Portfolio Html Template 
-Author:  Gramentheme
-Author URI: https://themeforest.net/user/gramentheme/portfolio
+Author:  wordpressriver
+Author URI: https://themeforest.net/user/wordpressriver/portfolio
 Version: 1.0.0
 Description: Agznko - Creative Agency and Portfolio Html Template <
 
@@ -158,6 +158,10 @@ CSS TABLE OF CONTENTS
                     delay: 1000,
                     disableOnInteraction: false,
                 },
+                pagination: {
+                    el: ".dot",
+                    clickable: true,
+                },
                 breakpoints: {
                     1399: {
                         slidesPerView: 4,
@@ -227,7 +231,69 @@ CSS TABLE OF CONTENTS
                 setInterval(followImageCursor(event, item), 1000);
             });
         });
+
+        //>> Search Popup Start <<//
+        const $searchWrap = $(".search-wrap");
+        const $navSearch = $(".nav-search");
+        const $searchClose = $("#search-close");
+
+        $(".search-trigger").on("click", function (e) {
+            e.preventDefault();
+            $searchWrap.animate({ opacity: "toggle" }, 500);
+            $navSearch.add($searchClose).addClass("open");
+        });
+
+        $(".search-close").on("click", function (e) {
+            e.preventDefault();
+            $searchWrap.animate({ opacity: "toggle" }, 500);
+            $navSearch.add($searchClose).removeClass("open");
+        });
+
+        function closeSearch() {
+            $searchWrap.fadeOut(200);
+            $navSearch.add($searchClose).removeClass("open");
+        }
+
+        $(document.body).on("click", function (e) {
+            closeSearch();
+        });
+
+        $(".search-trigger, .main-search-input").on("click", function (e) {
+            e.stopPropagation();
+        });
         
+        //>> Mouse Cursor Start <<//
+        function mousecursor() {
+            if ($("body")) {
+                const e = document.querySelector(".cursor-inner"),
+                    t = document.querySelector(".cursor-outer");
+                let n,
+                    i = 0,
+                    o = !1;
+                (window.onmousemove = function(s) {
+                    o ||
+                        (t.style.transform =
+                            "translate(" + s.clientX + "px, " + s.clientY + "px)"),
+                        (e.style.transform =
+                            "translate(" + s.clientX + "px, " + s.clientY + "px)"),
+                        (n = s.clientY),
+                        (i = s.clientX);
+                }),
+                $("body").on("mouseenter", "a, .cursor-pointer", function() {
+                        e.classList.add("cursor-hover"), t.classList.add("cursor-hover");
+                    }),
+                    $("body").on("mouseleave", "a, .cursor-pointer", function() {
+                        ($(this).is("a") && $(this).closest(".cursor-pointer").length) ||
+                        (e.classList.remove("cursor-hover"),
+                            t.classList.remove("cursor-hover"));
+                    }),
+                    (e.style.visibility = "visible"),
+                    (t.style.visibility = "visible");
+            }
+        }
+        $(function() {
+            mousecursor();
+        });
 
         //>> Back To Top Slider Start <<//
         $(window).scroll(function () {
@@ -248,15 +314,15 @@ CSS TABLE OF CONTENTS
 
 
 
-    // function loader() {
-    //     $(window).on('load', function() {
-    //         // Animate loader off screen
-    //         $(".preloader").addClass('loaded');                    
-    //         $(".preloader").delay(600).fadeOut();                       
-    //     });
-    // }
+    function loader() {
+        $(window).on('load', function() {
+            // Animate loader off screen
+            $(".preloader").addClass('loaded');                    
+            $(".preloader").delay(600).fadeOut();                       
+        });
+    }
 
-    // loader();
+    loader();
    
 
 })(jQuery); // End jQuery
